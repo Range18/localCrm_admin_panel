@@ -1,21 +1,21 @@
-.svcGrid{
+.tileGrid{
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 14px;
 }
 
 @media (max-width: 1100px){
-    .svcGrid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .tileGrid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 720px){
-    .svcGrid{ grid-template-columns: 1fr; }
+    .tileGrid{ grid-template-columns: 1fr; }
 }
 
-.svcGridItem{
+.tileGridItem{
     min-width: 0;
 }
 
-.svcGridEmpty{
+.tileGridEmpty{
     border: 1px dashed rgba(107, 114, 128, 0.35);
     background: rgba(255,255,255,0.55);
     color: var(--text-muted);

@@ -3,13 +3,17 @@ import "./App.css";
 import { AppShell } from "./layout/AppShell";
 
 import type { ServiceCardData } from "./components/service-card/ServiceCard";
-import {ServicesPage} from "./pages/service-page/ServicePage";
-import type {SidebarKey} from "./components/sidebar-tab/types";
+import { ServiceCard } from "./components/service-card/ServiceCard";
+
+import type { MasterCardData } from "./components/master-card/MasterCard";
+import { MasterCard } from "./components/master-card/MasterCard";
+
+import type { SidebarKey } from "./components/sidebar-tab/types";
+import { TilePage } from "./pages/tile-page/TilePage";
 
 export default function App() {
     const [activeKey, setActiveKey] = useState<SidebarKey>("schedule");
 
-    //TODO remove
     const services = useMemo<ServiceCardData[]>(
         () => [
             { id: "1", title: "Стрижка", description: "Классическая стрижка с мытьём и укладкой.", price: 1500, durationMin: 60, currency: "RUB" },
@@ -19,11 +23,70 @@ export default function App() {
         []
     );
 
+    // ✅ моковые мастера
+    const masters = useMemo<MasterCardData[]>(
+        () => [
+            {
+                id: "m1",
+                firstName: "Анна",
+                lastName: "Иванова",
+                specialization: "Парикмахер-стилист",
+                description: "Стрижки, укладки, уход. 6 лет опыта, работает аккуратно и быстро.",
+                imageUrl: "", // можешь вставить ссылку на фото
+            },
+            {
+                id: "m2",
+                firstName: "Мария",
+                lastName: "Петрова",
+                specialization: "Колорист",
+                description: "Окрашивания любой сложности, блонд, тонирование, подбор оттенка.",
+            },
+            {
+                id: "m3",
+                firstName: "Екатерина",
+                lastName: "Смирнова",
+                specialization: "Мастер маникюра",
+                description: "Комбинированный маникюр, покрытие, дизайн. Любит минимализм.",
+            },
+            {
+                id: "m4",
+                firstName: "Ольга",
+                lastName: "Кузнецова",
+                specialization: "Бровист",
+                description: "Коррекция и окрашивание бровей, ламинирование, подбор формы.",
+            },
+            {
+                id: "m5",
+                firstName: "Ирина",
+                lastName: "Соколова",
+                specialization: "Косметолог",
+                description: "Уходовые процедуры, чистки, консультации по домашнему уходу.",
+            },
+        ],
+        []
+    );
+
     return (
         <div className="app">
             <AppShell orgName="Моя организация" activeKey={activeKey} onChange={setActiveKey}>
                 {activeKey === "services" ? (
-                    <ServicesPage services={services} onEditService={(id) => console.log("edit", id)} />
+                    <TilePage<ServiceCardData>
+                        title="Услуги"
+                        subtitle="Цена, длительность, описание"
+                        items={services}
+                        emptyText="Добавь первую услугу"
+                        ariaLabel="Список услуг"
+                        renderItem={(s) => <ServiceCard data={s} onEdit={(id) => console.log("edit service", id)} />}
+                    />
+                ) : activeKey === "masters" ? (
+                    <TilePage<MasterCardData>
+                        title="Мастера"
+                        subtitle="Список специалистов вашей организации"
+                        items={masters}
+                        emptyText="Добавь первого мастера"
+                        ariaLabel="Список мастеров"
+                        renderItem={(m) => <MasterCard data={m} onEdit={(id) => console.log("edit master", id)} />}
+                    />
                 ) : (
                     <div className="page">
                         <div className="pageHeader">
