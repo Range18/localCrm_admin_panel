@@ -1,6 +1,6 @@
 import "./AppShell.css";
 import { Sidebar } from "../components/sidebar/Sidebar";
-import type { SidebarKey } from "../components/sidebar-tab/SidebarTab";
+import type { SidebarKey } from "../components/sidebar-tab/types";
 import type { ReactNode } from "react";
 
 type Props = {
