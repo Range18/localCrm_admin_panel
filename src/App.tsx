@@ -10,6 +10,8 @@ import { MasterCard } from "./components/master-card/MasterCard";
 
 import type { SidebarKey } from "./components/sidebar-tab/types";
 import { TilePage } from "./pages/tile-page/TilePage";
+import {ClientCard} from "./components/client-card/ClientCard";
+import type {ClientCardData} from "./components/client-card/ClientCard";
 
 export default function App() {
     const [activeKey, setActiveKey] = useState<SidebarKey>("schedule");
@@ -19,6 +21,35 @@ export default function App() {
             { id: "1", title: "Стрижка", description: "Классическая стрижка с мытьём и укладкой.", price: 1500, durationMin: 60, currency: "RUB" },
             { id: "2", title: "Окрашивание", description: "Подбор оттенка, окрашивание и уход.", price: 4500, durationMin: 120, currency: "RUB" },
             { id: "3", title: "Маникюр", description: "Обработка + покрытие (по желанию).", price: 2000, durationMin: 90, currency: "RUB" },
+        ],
+        []
+    );
+
+    const clients = useMemo<ClientCardData[]>(
+        () => [
+            {
+                id: "c1",
+                firstName: "Алексей",
+                lastName: "Сидоров",
+                phone: "+7 999 123-45-67",
+                source: "telegram",
+                telegramUsername: "alex_sidorov",
+                imageUrl: "",
+            },
+            {
+                id: "c2",
+                firstName: "Дарья",
+                lastName: "Ким",
+                phone: "+7 916 222-11-00",
+                source: "whatsapp",
+            },
+            {
+                id: "c3",
+                firstName: "Никита",
+                lastName: "Орлов",
+                phone: "+7 903 555-88-99",
+                source: "telegram",
+            },
         ],
         []
     );
@@ -86,6 +117,15 @@ export default function App() {
                         emptyText="Добавь первого мастера"
                         ariaLabel="Список мастеров"
                         renderItem={(m) => <MasterCard data={m} onEdit={(id) => console.log("edit master", id)} />}
+                    />
+                ) : activeKey === "clients" ? (
+                    <TilePage<ClientCardData>
+                        title="Клиенты"
+                        subtitle="Контакты и источник (Telegram/WhatsApp)"
+                        items={clients}
+                        emptyText="Добавь первого клиента"
+                        ariaLabel="Список клиентов"
+                        renderItem={(c) => <ClientCard data={c} onEdit={(id) => console.log("edit client", id)} />}
                     />
                 ) : (
                     <div className="page">

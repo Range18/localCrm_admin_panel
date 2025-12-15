@@ -1,0 +1,175 @@
+.clCard{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.clImgWrap{
+    height: 120px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    place-items: center;
+}
+
+.clImg{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.clImgPlaceholder{
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+
+    color: var(--text-muted);
+    background: rgba(255,255,255,0.7);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+}
+
+.clBody{
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+}
+
+.clTop{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.clTitle{
+    margin: 0;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text);
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.clMeta{
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.clPill{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 6px 10px;
+    border-radius: 999px;
+
+    font-size: 12.5px;
+    font-weight: 800;
+
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.65);
+    color: var(--text);
+}
+
+.clPillIcon{
+    display: grid;
+    place-items: center;
+    color: var(--text-muted);
+}
+
+.clPill.isTg{
+    border-color: rgba(56, 189, 248, 0.35);
+    background: var(--info-weak);
+    color: #0369A1;
+}
+.clPill.isTg .clPillIcon{ color: #0284C7; }
+
+.clPill.isWa{
+    border-color: rgba(34, 197, 94, 0.35);
+    background: var(--success-weak);
+    color: #166534;
+}
+.clPill.isWa .clPillIcon{ color: #16A34A; }
+
+.clPill.isUser{
+    border-color: rgba(109, 94, 246, 0.25);
+    background: var(--primary-weak);
+    color: var(--primary);
+}
+
+.clRow{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+
+    padding-top: 2px;
+}
+
+.clLabel{
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.clValue{
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--text);
+    white-space: nowrap;
+}
+
+.clEditBtn{
+    flex: 0 0 auto;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.75);
+    color: var(--text);
+    border-radius: 12px;
+
+    padding: 8px 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    box-shadow: var(--shadow-sm);
+    transition: transform .05s ease, border-color .15s ease, background .15s ease;
+}
+
+.clEditBtn:hover{
+    border-color: rgba(109, 94, 246, 0.35);
+    background: rgba(233, 230, 255, 0.6);
+}
+
+.clEditBtn:active{
+    transform: translateY(1px);
+}
+
+.clEditBtn:focus-visible{
+    outline: none;
+    box-shadow: var(--focus);
+}
+
+.clEditIcon{
+    color: var(--primary);
+    display: grid;
+    place-items: center;
+}
