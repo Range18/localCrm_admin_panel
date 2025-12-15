@@ -1,0 +1,59 @@
+.sbTab{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 10px 10px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    background: transparent;
+    cursor: pointer;
+
+    color: var(--text);
+    text-align: left;
+    transition: background .15s ease, border-color .15s ease, transform .05s ease;
+}
+
+.sbTab:hover{
+    background: var(--surface-2);
+}
+
+.sbTab:active{
+    transform: translateY(1px);
+}
+
+.sbTab:focus-visible{
+    outline: none;
+    box-shadow: var(--focus);
+}
+
+.sbTab.isActive{
+    background: var(--primary-weak);
+    border-color: rgba(109, 94, 246, 0.25);
+}
+
+.sbTabIcon{
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+
+    color: var(--text-muted);
+    background: rgba(255,255,255,0.7);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border);
+    flex: 0 0 auto;
+}
+
+.sbTab.isActive .sbTabIcon{
+    color: var(--primary);
+    border-color: rgba(109, 94, 246, 0.25);
+}
+
+.sbTabLabel{
+    font-size: 15px;
+    line-height: 1.2;
+    font-weight: 600;
+}

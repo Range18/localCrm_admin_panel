@@ -1,0 +1,37 @@
+.app{
+  min-height: 100vh;
+}
+
+.page{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pageHeader{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pageTitle{
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.pageSubtitle{
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.card{
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 16px;
+}
