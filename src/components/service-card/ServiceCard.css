@@ -1,0 +1,150 @@
+.svcCard{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.svcImgWrap{
+    height: 120px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    place-items: center;
+}
+
+.svcImg{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.svcImgPlaceholder{
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+
+    color: var(--text-muted);
+    background: rgba(255,255,255,0.7);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+}
+
+.svcBody{
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+}
+
+.svcTop{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.svcTitle{
+    margin: 0;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text);
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.svcMeta{
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.svcPill{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 6px 10px;
+    border-radius: 999px;
+
+    font-size: 12.5px;
+    font-weight: 800;
+
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.65);
+    color: var(--text);
+}
+
+.svcPill.isPrice{
+    border-color: rgba(109, 94, 246, 0.25);
+    background: var(--primary-weak);
+    color: var(--primary);
+}
+
+.svcPill.isDuration{
+    border-color: rgba(107, 114, 128, 0.25);
+    background: rgba(246,244,239,0.9);
+    color: var(--text-muted);
+}
+
+.svcDesc{
+    margin: 0;
+    font-size: 13px;
+    color: var(--text-muted);
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.svcEditBtn{
+    flex: 0 0 auto;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.75);
+    color: var(--text);
+    border-radius: 12px;
+
+    padding: 8px 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    box-shadow: var(--shadow-sm);
+    transition: transform .05s ease, border-color .15s ease, background .15s ease;
+}
+
+.svcEditBtn:hover{
+    border-color: rgba(109, 94, 246, 0.35);
+    background: rgba(233, 230, 255, 0.6);
+}
+
+.svcEditBtn:active{
+    transform: translateY(1px);
+}
+
+.svcEditBtn:focus-visible{
+    outline: none;
+    box-shadow: var(--focus);
+}
+
+.svcEditIcon{
+    color: var(--primary);
+    display: grid;
+    place-items: center;
+}
