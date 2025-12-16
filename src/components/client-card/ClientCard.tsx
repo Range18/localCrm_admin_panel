@@ -1,5 +1,5 @@
 import "./ClientCard.css";
-import {ClientCardData} from "./types";
+import type {ClientCardData} from "./types";
 
 type ClientCardProps = {
     data: ClientCardData;

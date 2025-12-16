@@ -11,7 +11,8 @@ import { MasterCard } from "./components/master-card/MasterCard";
 import type { SidebarKey } from "./components/sidebar-tab/types";
 import { TilePage } from "./pages/tile-page/TilePage";
 import {ClientCard} from "./components/client-card/ClientCard";
-import {ClientCardData} from "./components/client-card/types";
+import type {ClientCardData} from "./components/client-card/types";
+import {useClients} from "./hooks/clients/useClients";
 
 export default function App() {
     const [activeKey, setActiveKey] = useState<SidebarKey>("schedule");
@@ -25,34 +26,37 @@ export default function App() {
         []
     );
 
-    const clients = useMemo<ClientCardData[]>(
-        () => [
-            {
-                id: "c1",
-                firstName: "Алексей",
-                lastName: "Сидоров",
-                phone: "+7 999 123-45-67",
-                source: "telegram",
-                telegramUsername: "alex_sidorov",
-                imageUrl: "",
-            },
-            {
-                id: "c2",
-                firstName: "Дарья",
-                lastName: "Ким",
-                phone: "+7 916 222-11-00",
-                source: "whatsapp",
-            },
-            {
-                id: "c3",
-                firstName: "Никита",
-                lastName: "Орлов",
-                phone: "+7 903 555-88-99",
-                source: "telegram",
-            },
-        ],
-        []
-    );
+    // const clients = useMemo<ClientCardData[]>(
+    //     () => [
+    //         {
+    //             id: "c1",
+    //             firstName: "Алексей",
+    //             lastName: "Сидоров",
+    //             phone: "+7 999 123-45-67",
+    //             source: "telegram",
+    //             telegramUsername: "alex_sidorov",
+    //             imageUrl: "",
+    //         },
+    //         {
+    //             id: "c2",
+    //             firstName: "Дарья",
+    //             lastName: "Ким",
+    //             phone: "+7 916 222-11-00",
+    //             source: "whatsapp",
+    //         },
+    //         {
+    //             id: "c3",
+    //             firstName: "Никита",
+    //             lastName: "Орлов",
+    //             phone: "+7 903 555-88-99",
+    //             source: "telegram",
+    //         },
+    //     ],
+    //     []
+    // );
+
+
+    const clients = useClients();
 
     // ✅ моковые мастера
     const masters = useMemo<MasterCardData[]>(
