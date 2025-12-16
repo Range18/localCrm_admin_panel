@@ -1,25 +1,12 @@
 import "./ClientCard.css";
+import {ClientCardData} from "./types";
 
-export type ClientSource = "telegram" | "whatsapp";
-
-export type ClientCardData = {
-    id: string;
-    firstName: string;
-    lastName: string;
-    phone: string;
-
-    source: ClientSource;
-    telegramUsername?: string;
-
-    imageUrl?: string;
-};
-
-type Props = {
+type ClientCardProps = {
     data: ClientCardData;
     onEdit?: (id: string) => void;
 };
 
-export function ClientCard({ data, onEdit }: Props) {
+export function ClientCard({ data, onEdit }: ClientCardProps) {
     const fullName = `${data.firstName} ${data.lastName}`.trim();
 
     return (
@@ -90,7 +77,6 @@ export function ClientCard({ data, onEdit }: Props) {
     );
 }
 
-/** Заглушки иконок (можешь заменить своими SVG) */
 function IconTelegram() {
     return (
         <svg width="16" height="16" viewBox="0 0 20 20" fill="none">

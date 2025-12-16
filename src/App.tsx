@@ -11,7 +11,7 @@ import { MasterCard } from "./components/master-card/MasterCard";
 import type { SidebarKey } from "./components/sidebar-tab/types";
 import { TilePage } from "./pages/tile-page/TilePage";
 import {ClientCard} from "./components/client-card/ClientCard";
-import type {ClientCardData} from "./components/client-card/ClientCard";
+import {ClientCardData} from "./components/client-card/types";
 
 export default function App() {
     const [activeKey, setActiveKey] = useState<SidebarKey>("schedule");
