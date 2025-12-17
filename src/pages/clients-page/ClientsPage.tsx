@@ -1,27 +1,28 @@
 import { useMemo, useState } from "react";
-import "../PageStyle.css"; // переиспользуем стили формы/кнопок
+import "../PageStyle.css"; // используем rdForm/rdBtn/rdBtnPrimary/rdBtnDanger
 import { TilePage } from "../tile-page/TilePage";
-import { MasterCard, type MasterCardData } from "../../components/master-card/MasterCard";
-import { RightDrawer } from "../../components/right-drawer/RightDrawer";
+import { ClientCard } from "../../components/client-card/ClientCard";
+import type { ClientCardData, ClientSource } from "../../components/client-card/types";
+import {RightDrawer} from "../../components/right-drawer/RightDrawer.tsx";
 
 type Props = {
-    masters: MasterCardData[];
-    onSave?: (updated: MasterCardData) => void;
+    clients: ClientCardData[];
+    onSave?: (updated: ClientCardData) => void;
     onDelete?: (id: string) => void;
 };
 
-export function MastersPage({ masters, onSave, onDelete }: Props) {
+export function ClientsPage({ clients, onSave, onDelete }: Props) {
     const [editingId, setEditingId] = useState<string | null>(null);
 
-    const editingMaster = useMemo(
-        () => masters.find((m) => m.id === editingId) ?? null,
-        [masters, editingId]
+    const editingClient = useMemo(
+        () => clients.find((c) => c.id === editingId) ?? null,
+        [clients, editingId]
     );
 
-    const [draft, setDraft] = useState<MasterCardData | null>(null);
+    const [draft, setDraft] = useState<ClientCardData | null>(null);
 
     const openEditor = (id: string) => {
-        const found = masters.find((m) => m.id === id);
+        const found = clients.find((c) => c.id === id);
         setEditingId(id);
         setDraft(found ? { ...found } : null);
     };
@@ -33,13 +34,19 @@ export function MastersPage({ masters, onSave, onDelete }: Props) {
 
     const save = () => {
         if (!draft) return;
-        onSave?.(draft);
+
+        onSave?.({
+            ...draft,
+            telegramUsername:
+                draft.source === "telegram" ? normalizeUsername(draft.telegramUsername) : undefined,
+        });
+
         closeEditor();
     };
 
     const remove = () => {
         if (!editingId) return;
-        const ok = window.confirm("Удалить мастера? Это действие нельзя отменить.");
+        const ok = window.confirm("Удалить клиента? Это действие нельзя отменить.");
         if (!ok) return;
         onDelete?.(editingId);
         closeEditor();
@@ -47,18 +54,18 @@ export function MastersPage({ masters, onSave, onDelete }: Props) {
 
     return (
         <>
-            <TilePage<MasterCardData>
-                title="Мастера"
-                subtitle="Список специалистов вашей организации"
-                items={masters}
-                emptyText="Добавь первого мастера"
-                ariaLabel="Список мастеров"
-                renderItem={(m) => <MasterCard data={m} onEdit={openEditor} />}
+            <TilePage<ClientCardData>
+                title="Клиенты"
+                subtitle="Контакты и источник (Telegram/WhatsApp)"
+                items={clients}
+                emptyText="Добавь первого клиента"
+                ariaLabel="Список клиентов"
+                renderItem={(c) => <ClientCard data={c} onEdit={openEditor} />}
             />
 
             <RightDrawer
-                open={!!editingMaster}
-                title="Редактирование мастера"
+                open={!!editingClient}
+                title="Редактирование клиента"
                 onClose={closeEditor}
                 footer={
                     <>
@@ -102,25 +109,45 @@ export function MastersPage({ masters, onSave, onDelete }: Props) {
                         </div>
 
                         <label className="rdField">
-                            <span className="rdLabel">Специализация</span>
+                            <span className="rdLabel">Телефон</span>
                             <input
                                 className="rdInput"
-                                value={draft.specialization}
-                                onChange={(e) => setDraft({ ...draft, specialization: e.target.value })}
-                                placeholder="Например: Колорист"
+                                value={draft.phone}
+                                onChange={(e) => setDraft({ ...draft, phone: e.target.value })}
+                                placeholder="+7..."
                             />
                         </label>
 
                         <label className="rdField">
-                            <span className="rdLabel">Описание</span>
-                            <textarea
-                                className="rdTextarea"
-                                value={draft.description}
-                                onChange={(e) => setDraft({ ...draft, description: e.target.value })}
-                                placeholder="Коротко о мастере"
-                                rows={4}
-                            />
+                            <span className="rdLabel">Источник</span>
+                            <select
+                                className="rdInput"
+                                value={draft.source}
+                                onChange={(e) =>
+                                    setDraft({
+                                        ...draft,
+                                        source: e.target.value as ClientSource,
+                                        telegramUsername:
+                                            e.target.value === "telegram" ? draft.telegramUsername : undefined,
+                                    })
+                                }
+                            >
+                                <option value="telegram">Telegram</option>
+                                <option value="whatsapp">WhatsApp</option>
+                            </select>
                         </label>
+
+                        {draft.source === "telegram" ? (
+                            <label className="rdField">
+                                <span className="rdLabel">Telegram username</span>
+                                <input
+                                    className="rdInput"
+                                    value={draft.telegramUsername ?? ""}
+                                    onChange={(e) => setDraft({ ...draft, telegramUsername: e.target.value })}
+                                    placeholder="@username"
+                                />
+                            </label>
+                        ) : null}
 
                         <label className="rdField">
                             <span className="rdLabel">Фото (URL)</span>
@@ -135,9 +162,16 @@ export function MastersPage({ masters, onSave, onDelete }: Props) {
                         </label>
                     </div>
                 ) : (
-                    <div className="card">Не удалось загрузить данные мастера</div>
+                    <div className="card">Не удалось загрузить данные клиента</div>
                 )}
             </RightDrawer>
         </>
     );
+}
+
+function normalizeUsername(v?: string) {
+    if (!v) return undefined;
+    const s = v.trim();
+    if (!s) return undefined;
+    return s.replace(/^@+/, ""); // храним без @
 }

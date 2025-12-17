@@ -1,17 +1,15 @@
 import {useState} from "react";
 import "./App.css";
-import "./pages/services-page/ServicesPage.css"
+import "./pages/PageStyle.css"
 import {AppShell} from "./layout/AppShell";
 
 import type {SidebarKey} from "./components/sidebar-tab/types";
-import {TilePage} from "./pages/tile-page/TilePage";
-import {ClientCard} from "./components/client-card/ClientCard";
-import type {ClientCardData} from "./components/client-card/types";
 import {useClients} from "./hooks/clients/useClients";
 import {useMasters} from "./hooks/masters/useMasters.ts";
 import {useServices} from "./hooks/services/useServices.ts";
 import {ServicesPage} from "./pages/services-page/ServicesPage.tsx";
 import {MastersPage} from "./pages/masters-page/MasterPage.tsx";
+import {ClientsPage} from "./pages/clients-page/ClientsPage.tsx";
 
 export default function App() {
     const [activeKey, setActiveKey] = useState<SidebarKey>("schedule");
@@ -35,13 +33,10 @@ export default function App() {
                         onDelete={(id) => console.log("delete", id)}
                     />
                 ) : activeKey === "clients" ? (
-                    <TilePage<ClientCardData>
-                        title="Клиенты"
-                        subtitle="Контакты и источник (Telegram/WhatsApp)"
-                        items={clientsResponse.data}
-                        emptyText="Добавь первого клиента"
-                        ariaLabel="Список клиентов"
-                        renderItem={(c) => <ClientCard data={c} onEdit={(id) => console.log("edit client", id)}/>}
+                    <ClientsPage
+                        clients={clientsResponse.data}
+                        onSave={(updated) => console.log("save to api", updated)}
+                        onDelete={(id) => console.log("delete", id)}
                     />
                 ) : (
                     <div className="page">

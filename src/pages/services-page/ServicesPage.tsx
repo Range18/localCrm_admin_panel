@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import "../PageStyle.css";
 import {TilePage} from "../tile-page/TilePage.tsx";
 import {ServiceCard, type ServiceCardData} from "../../components/service-card/ServiceCard.tsx";
 import {RightDrawer} from "../../components/right-drawer/RightDrawer.tsx";
