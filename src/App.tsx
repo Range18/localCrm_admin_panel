@@ -2,8 +2,6 @@ import {useState} from "react";
 import "./App.css";
 import "./pages/services-page/ServicesPage.css"
 import {AppShell} from "./layout/AppShell";
-import type {MasterCardData} from "./components/master-card/MasterCard";
-import {MasterCard} from "./components/master-card/MasterCard";
 
 import type {SidebarKey} from "./components/sidebar-tab/types";
 import {TilePage} from "./pages/tile-page/TilePage";
@@ -13,6 +11,7 @@ import {useClients} from "./hooks/clients/useClients";
 import {useMasters} from "./hooks/masters/useMasters.ts";
 import {useServices} from "./hooks/services/useServices.ts";
 import {ServicesPage} from "./pages/services-page/ServicesPage.tsx";
+import {MastersPage} from "./pages/masters-page/MasterPage.tsx";
 
 export default function App() {
     const [activeKey, setActiveKey] = useState<SidebarKey>("schedule");
@@ -30,13 +29,10 @@ export default function App() {
                         onDelete={(id) => console.log("delete", id)}
                     />
                 ) : activeKey === "masters" ? (
-                    <TilePage<MasterCardData>
-                        title="Мастера"
-                        subtitle="Список специалистов вашей организации"
-                        items={mastersResponse.data}
-                        emptyText="Добавь первого мастера"
-                        ariaLabel="Список мастеров"
-                        renderItem={(m) => <MasterCard data={m} onEdit={(id) => console.log("edit master", id)}/>}
+                    <MastersPage
+                        masters={mastersResponse.data}
+                        onSave={(updated) => console.log("save to api", updated)}
+                        onDelete={(id) => console.log("delete", id)}
                     />
                 ) : activeKey === "clients" ? (
                     <TilePage<ClientCardData>
