@@ -6,3 +6,7 @@ export async function getClients() {
     const res = await api.get<ClientDto[]>("/api/v1/clients/");
     return res.data;
 }
+
+export async function deleteClient(clientId: string) {
+    await api.delete(`/api/v1/clients/${clientId}`);
+}

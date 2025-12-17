@@ -14,7 +14,7 @@ import {ClientsPage} from "./pages/clients-page/ClientsPage.tsx";
 export default function App() {
     const [activeKey, setActiveKey] = useState<SidebarKey>("schedule");
     const servicesResponse = useServices();
-    const clientsResponse = useClients();
+    const clientsState = useClients();
     const mastersResponse = useMasters();
 
     return (
@@ -34,9 +34,9 @@ export default function App() {
                     />
                 ) : activeKey === "clients" ? (
                     <ClientsPage
-                        clients={clientsResponse.data}
+                        clients={clientsState.data}
                         onSave={(updated) => console.log("save to api", updated)}
-                        onDelete={(id) => console.log("delete", id)}
+                        onDelete={clientsState.remove}
                     />
                 ) : (
                     <div className="page">
