@@ -1,0 +1,32 @@
+.wk{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.wkBtn{
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.75);
+    border-radius: 12px;
+    padding: 8px 10px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+}
+
+.wkBtn:hover{
+    border-color: rgba(109, 94, 246, 0.35);
+    background: rgba(233, 230, 255, 0.6);
+}
+
+.wkBtn:focus-visible{
+    outline: none;
+    box-shadow: var(--focus);
+}
+
+.wkLabel{
+    min-width: 150px;
+    text-align: center;
+    font-weight: 900;
+    color: var(--text);
+}

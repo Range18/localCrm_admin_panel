@@ -1,0 +1,149 @@
+.cal{
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.calHeader{
+    display: grid;
+    grid-template-columns: 72px repeat(7, 1fr) var(--sbw, 0px); /* ✅ + gutter под скроллбар */
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(246,244,239,.9));
+}
+
+.calHeaderGutter{
+    /* пустая колонка, чтобы шапка совпала по ширине с body */
+}
+
+.calHeaderLeft{
+    border-right: 1px solid var(--border);
+}
+
+.calHeaderDay{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 8px;
+    border-right: 1px solid var(--border);
+}
+
+.calHeaderDay:last-child{
+    border-right: 0;
+}
+
+.calDow{
+    font-weight: 900;
+    color: var(--text-muted);
+    font-size: 12px;
+    letter-spacing: .4px;
+}
+
+.calDate{
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    font-weight: 900;
+    color: var(--text);
+}
+
+.calHeaderDay.isToday .calDate{
+    background: var(--primary);
+    color: #fff;
+}
+
+.calBody{
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    height: 72vh;
+    min-height: 520px;
+}
+
+.calTimes{
+    border-right: 1px solid var(--border);
+    background: rgba(246,244,239,0.5);
+    overflow: hidden;               /* ✅ не скроллим руками */
+    position: relative;
+}
+
+.calTimeRow{
+    position: relative;
+    border-bottom: 1px solid rgba(233, 228, 218, 0.75);
+}
+
+.calTimesInner{
+    will-change: transform;         /* ✅ плавнее */
+}
+
+.calGrid{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    position: relative;
+    overflow: auto;                  /* ✅ скролл тут */
+    background: var(--surface);
+
+    scrollbar-gutter: stable;        /* ✅ меньше “дёрганий” */
+}
+
+.calTimeLabel{
+    position: absolute;
+    top: -8px;
+    right: 8px;
+    font-size: 11px;
+    font-weight: 900;
+    color: var(--text-muted);
+    background: rgba(246,244,239,0.85);
+    padding: 2px 6px;
+    border-radius: 999px;
+}
+
+.calDayCol{
+    position: relative;
+    min-height: 100%;
+    border-right: 1px solid var(--border);
+}
+
+.calDayCol:last-child{
+    border-right: 0;
+}
+
+.calHourLine{
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(233, 228, 218, 0.75);
+}
+
+.calNow{
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+.calNowDot{
+    position: absolute;
+    left: 8px;
+    top: -5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: #ef4444;
+    box-shadow: 0 2px 8px rgba(239,68,68,0.35);
+}
+
+.calNowLine{
+    position: absolute;
+    left: 18px;
+    right: 8px;
+    top: -1px;
+    height: 2px;
+    background: #ef4444;
+    border-radius: 999px;
+}

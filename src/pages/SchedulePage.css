@@ -1,0 +1,28 @@
+.schControls{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.schSelect{
+    min-width: 220px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.75);
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-weight: 800;
+    box-shadow: var(--shadow-sm);
+}
+
+.schSelect:focus-visible{
+    outline: none;
+    box-shadow: var(--focus);
+}
+
+.schCard{
+    padding: 0; /* календарь сам с рамками */
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
