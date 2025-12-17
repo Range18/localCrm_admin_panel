@@ -6,8 +6,8 @@ export type ServiceCardData = {
     description: string;
     imageUrl?: string;
 
-    price: number;        // в валюте по умолчанию
-    durationMin: number;  // длительность в минутах
+    price: number;
+    durationMin: string;
     currency?: "RUB" | "EUR" | "USD";
 };
 
@@ -82,9 +82,7 @@ function formatMoney(amount: number, currency: "RUB" | "EUR" | "USD") {
     }).format(amount);
 }
 
-function formatDuration(min: number) {
-    if (min < 60) return `${min} мин`;
-    const h = Math.floor(min / 60);
-    const m = min % 60;
-    return m ? `${h} ч ${m} мин` : `${h} ч`;
+function formatDuration(time: string) {
+    const [hours, minutes] = time.split(":");
+    return `${hours}:${minutes}`;
 }
