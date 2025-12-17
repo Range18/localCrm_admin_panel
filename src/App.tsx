@@ -1,10 +1,7 @@
 import {useState} from "react";
 import "./App.css";
+import "./pages/services-page/ServicesPage.css"
 import {AppShell} from "./layout/AppShell";
-
-import type {ServiceCardData} from "./components/service-card/ServiceCard";
-import {ServiceCard} from "./components/service-card/ServiceCard";
-
 import type {MasterCardData} from "./components/master-card/MasterCard";
 import {MasterCard} from "./components/master-card/MasterCard";
 
@@ -15,6 +12,7 @@ import type {ClientCardData} from "./components/client-card/types";
 import {useClients} from "./hooks/clients/useClients";
 import {useMasters} from "./hooks/masters/useMasters.ts";
 import {useServices} from "./hooks/services/useServices.ts";
+import {ServicesPage} from "./pages/services-page/ServicesPage.tsx";
 
 export default function App() {
     const [activeKey, setActiveKey] = useState<SidebarKey>("schedule");
@@ -26,13 +24,10 @@ export default function App() {
         <div className="app">
             <AppShell orgName="Моя организация" activeKey={activeKey} onChange={setActiveKey}>
                 {activeKey === "services" ? (
-                    <TilePage<ServiceCardData>
-                        title="Услуги"
-                        subtitle="Цена, длительность, описание"
-                        items={servicesResponse.data}
-                        emptyText="Добавь первую услугу"
-                        ariaLabel="Список услуг"
-                        renderItem={(s) => <ServiceCard data={s} onEdit={(id) => console.log("edit service", id)}/>}
+                    <ServicesPage
+                        services={servicesResponse.data}
+                        onSave={(updated) => console.log("save to api", updated)}
+                        onDelete={(id) => console.log("delete", id)}
                     />
                 ) : activeKey === "masters" ? (
                     <TilePage<MasterCardData>
