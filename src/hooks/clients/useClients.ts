@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import type {ClientsState} from "./types";
 import {mapClientDtoToCard} from "./mapDtoToCard";
 import {toApiError} from "../../utils/toApiError";
 import {getClients} from "../../api/clients/clients";
+import type {EntitiesState} from "../types.ts";
+import type {ClientCardData} from "../../components/client-card/types.ts";
 
 export function useClients() {
-    const [state, setState] = useState<ClientsState>({ status: "loading", data: [], error: null });
+    const [state, setState] = useState<EntitiesState<ClientCardData>>({ status: "loading", data: [], error: null });
 
     useEffect(() => {
         let cancelled = false;
