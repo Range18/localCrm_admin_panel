@@ -27,7 +27,7 @@
     justify-content: center;
     gap: 8px;
     padding: 12px 8px;
-    border-right: 1px solid var(--border);
+    border-right: 0;
 }
 
 .calHeaderDay:last-child{
@@ -83,10 +83,14 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     position: relative;
-    overflow: auto;                  /* ✅ скролл тут */
+    overflow: auto;
     background: var(--surface);
 
-    scrollbar-gutter: stable;        /* ✅ меньше “дёрганий” */
+    /* ✅ непрерывные вертикальные разделители на 7 колонок */
+    background-image:
+            linear-gradient(to right, rgba(233, 228, 218, 0.75) 1px, transparent 1px);
+    background-size: calc(100% / 7) 100%;
+    background-position: 0 0;
 }
 
 .calTimeLabel{
@@ -104,7 +108,7 @@
 .calDayCol{
     position: relative;
     min-height: 100%;
-    border-right: 1px solid var(--border);
+    border-right: 0; /* ✅ было 1px */
 }
 
 .calDayCol:last-child{
