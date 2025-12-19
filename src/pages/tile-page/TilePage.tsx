@@ -1,6 +1,7 @@
 import "./TilePage.css";
 import { TileGrid } from "../../components/grid/TileGrid";
 import type { ReactNode } from "react";
+import {FloatingAddButton} from "../../components/fab/FloatingAddButton";
 
 type Props<T> = {
     title: string;
@@ -13,6 +14,9 @@ type Props<T> = {
     ariaLabel?: string;
 
     rightSlot?: ReactNode; // кнопка "Добавить" и т.п.
+
+    fabOnClick?: () => void;        // ✅
+    fabAriaLabel?: string;          // ✅
 };
 
 export function TilePage<T>({
@@ -23,6 +27,8 @@ export function TilePage<T>({
                                 emptyText,
                                 ariaLabel,
                                 rightSlot,
+                                fabOnClick,
+                                fabAriaLabel,
                             }: Props<T>) {
     return (
         <div className="page">
@@ -41,6 +47,7 @@ export function TilePage<T>({
                 emptyText={emptyText}
                 ariaLabel={ariaLabel}
             />
+            {fabOnClick ? <FloatingAddButton onClick={fabOnClick} ariaLabel={fabAriaLabel ?? "Создать"} /> : null}
         </div>
     );
 }

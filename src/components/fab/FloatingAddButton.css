@@ -1,0 +1,29 @@
+.fabAdd{
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    z-index: 50;
+
+    width: 56px;
+    height: 56px;
+    border-radius: 999px;
+
+    border: 1px solid rgba(0,0,0,0.08);
+    background: #0b0b0c;
+    color: #fff;
+
+    display: grid;
+    place-items: center;
+
+    cursor: pointer;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.18);
+    transition: transform .08s ease, opacity .15s ease;
+}
+
+.fabAdd:hover{ transform: translateY(-1px); }
+.fabAdd:active{ transform: translateY(0); }
+
+.fabAdd:focus-visible{
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(109, 94, 246, 0.25), 0 10px 28px rgba(0,0,0,0.18);
+}

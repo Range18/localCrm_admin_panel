@@ -1,55 +1,71 @@
 import { useMemo, useState } from "react";
 import "../PageStyle.css";
-import {TilePage} from "../tile-page/TilePage.tsx";
-import {ServiceCard, type ServiceCardData} from "../../components/service-card/ServiceCard.tsx";
-import {RightDrawer} from "../../components/right-drawer/RightDrawer.tsx";
+
+import { TilePage } from "../tile-page/TilePage";
+import { RightDrawer } from "../../components/right-drawer/RightDrawer";
+import { ServiceCard, type ServiceCardData } from "../../components/service-card/ServiceCard";
+
+type Mode = "create" | "edit" | null;
 
 type Props = {
     services: ServiceCardData[];
+    onCreate?: (created: ServiceCardData) => void;
     onSave?: (updated: ServiceCardData) => void;
     onDelete?: (id: string) => void;
 };
 
-export function ServicesPage({ services, onSave, onDelete }: Props) {
+export function ServicesPage({ services, onCreate, onSave, onDelete }: Props) {
+    const [mode, setMode] = useState<Mode>(null);
     const [editingId, setEditingId] = useState<string | null>(null);
+    const [draft, setDraft] = useState<ServiceCardData | null>(null);
 
     const editingService = useMemo(
         () => services.find((s) => s.id === editingId) ?? null,
         [services, editingId]
     );
 
-    const [draft, setDraft] = useState<ServiceCardData | null>(null);
-
-    // когда открываем — наполняем draft
-    const openEditor = (id: string) => {
+    const openEdit = (id: string) => {
         const found = services.find((s) => s.id === id);
+        setMode("edit");
         setEditingId(id);
         setDraft(found ? { ...found } : null);
     };
 
-    const closeEditor = () => {
+    const openCreate = () => {
+        setMode("create");
+        setEditingId(null);
+        setDraft({
+            id: crypto.randomUUID(),
+            title: "",
+            description: "",
+            price: 0,
+            durationMin: "00:30",
+            currency: "RUB",
+            imageUrl: undefined,
+        });
+    };
+
+    const close = () => {
+        setMode(null);
         setEditingId(null);
         setDraft(null);
     };
 
     const save = () => {
         if (!draft) return;
-        onSave?.({
-            ...draft,
-            durationMin: normalizeTime(draft.durationMin),
-        });
-        closeEditor();
+        if (mode === "create") onCreate?.(draft);
+        if (mode === "edit") onSave?.(draft);
+        close();
     };
 
     const remove = () => {
-        if (!editingId) return;
-
-        const ok = window.confirm("Удалить услугу? Это действие нельзя отменить.");
-        if (!ok) return;
-
+        if (mode !== "edit" || !editingId) return;
+        if (!window.confirm("Удалить услугу?")) return;
         onDelete?.(editingId);
-        closeEditor();
+        close();
     };
+
+    const drawerOpen = mode !== null;
 
     return (
         <>
@@ -59,24 +75,29 @@ export function ServicesPage({ services, onSave, onDelete }: Props) {
                 items={services}
                 emptyText="Добавь первую услугу"
                 ariaLabel="Список услуг"
-                renderItem={(s) => <ServiceCard data={s} onEdit={openEditor} />}
+                renderItem={(s) => <ServiceCard data={s} onEdit={openEdit} />}
+                fabOnClick={openCreate}
+                fabAriaLabel="Создать услугу"
             />
 
             <RightDrawer
-                open={!!editingService}
-                title="Редактирование услуги"
-                onClose={closeEditor}
+                open={drawerOpen}
+                title={mode === "create" ? "Новая услуга" : "Редактирование услуги"}
+                onClose={close}
                 footer={
                     <>
-                        <button className="rdBtnDanger" type="button" onClick={remove} disabled={!editingId}>
-                            Удалить
-                        </button>
+                        {mode === "edit" ? (
+                            <>
+                                <button className="rdBtnDanger" type="button" onClick={remove} disabled={!editingService}>
+                                    Удалить
+                                </button>
+                                <div style={{ flex: 1 }} />
+                            </>
+                        ) : (
+                            <div style={{ flex: 1 }} />
+                        )}
 
-                        <div style={{ flex: 1 }} />
-
-                        <button className="rdBtn" type="button" onClick={closeEditor}>
-                            Отмена
-                        </button>
+                        <button className="rdBtn" type="button" onClick={close}>Отмена</button>
                         <button className="rdBtnPrimary" type="button" onClick={save} disabled={!draft}>
                             Сохранить
                         </button>
@@ -87,64 +108,40 @@ export function ServicesPage({ services, onSave, onDelete }: Props) {
                     <div className="rdForm">
                         <label className="rdField">
                             <span className="rdLabel">Название</span>
-                            <input
-                                className="rdInput"
-                                value={draft.title}
-                                onChange={(e) => setDraft({ ...draft, title: e.target.value })}
-                                placeholder="Например: Стрижка"
-                            />
+                            <input className="rdInput" value={draft.title} onChange={(e) => setDraft({ ...draft, title: e.target.value })} />
                         </label>
 
                         <label className="rdField">
                             <span className="rdLabel">Описание</span>
-                            <textarea
-                                className="rdTextarea"
-                                value={draft.description}
-                                onChange={(e) => setDraft({ ...draft, description: e.target.value })}
-                                placeholder="Коротко опиши услугу"
-                                rows={4}
-                            />
+                            <textarea className="rdTextarea" rows={4} value={draft.description} onChange={(e) => setDraft({ ...draft, description: e.target.value })} />
                         </label>
 
                         <div className="rdRow">
                             <label className="rdField">
                                 <span className="rdLabel">Цена</span>
-                                <input
-                                    className="rdInput"
-                                    type="number"
-                                    value={draft.price}
-                                    onChange={(e) => setDraft({ ...draft, price: Number(e.target.value) })}
-                                    min={0}
-                                />
+                                <input className="rdInput" type="number" min={0} value={draft.price} onChange={(e) => setDraft({ ...draft, price: Number(e.target.value) })} />
                             </label>
 
                             <label className="rdField">
                                 <span className="rdLabel">Длительность</span>
-                                <input
-                                    className="rdInput"
-                                    type="time"
-                                    value={toTimeHHMM(draft.durationMin)}
-                                    onChange={(e) => setDraft({ ...draft, durationMin: e.target.value })}
-                                />
+                                <input className="rdInput" type="time" value={toHHMM(draft.durationMin)} onChange={(e) => setDraft({ ...draft, durationMin: e.target.value })} />
                             </label>
                         </div>
+
+                        <label className="rdField">
+                            <span className="rdLabel">Фото (URL)</span>
+                            <input className="rdInput" value={draft.imageUrl ?? ""} onChange={(e) => setDraft({ ...draft, imageUrl: e.target.value || undefined })} />
+                        </label>
                     </div>
                 ) : (
-                    <div className="card">Не удалось загрузить данные услуги</div>
+                    <div className="card">Нет данных</div>
                 )}
             </RightDrawer>
         </>
     );
 }
 
-function toTimeHHMM(time: string) {
-    // поддержка "HH:MM:SS" и "HH:MM"
-    const [h = "00", m = "00"] = time.split(":");
+function toHHMM(t: string) {
+    const [h = "00", m = "00"] = t.split(":");
     return `${h.padStart(2, "0")}:${m.padStart(2, "0")}`;
-}
-
-function normalizeTime(time: string) {
-    // если backend ждёт "HH:MM:SS", можно вернуть `${HH}:${MM}:00`
-    const hhmm = toTimeHHMM(time);
-    return hhmm; // оставляю "HH:MM" как у тебя в ServiceCard
 }

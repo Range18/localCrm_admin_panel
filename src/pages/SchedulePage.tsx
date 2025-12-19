@@ -1,17 +1,30 @@
 import { useMemo, useState } from "react";
 import "./SchedulePage.css";
-import type {Appointment, MasterOption} from "../components/schedule/types.ts";
-import {CalendarWeek} from "../components/schedule/CalendarWeek.tsx";
-import {WeekPicker} from "../components/schedule/WeekPicker.tsx";
+import type {
+    ClientOption,
+    ServiceOption,
+    AppointmentCreate,
+} from "../pages/types.ts";
+import { CalendarWeek } from "../components/schedule/CalendarWeek.tsx";
+import { WeekPicker } from "../components/schedule/WeekPicker.tsx";
+import { FloatingAddButton } from "../components/fab/FloatingAddButton";
+import { CreateAppointmentDrawer } from "./CreateAppointmentDrawer";
+import type {Appointment, MasterOption} from "../components/schedule/types";
 
 type Props = {
     masters: MasterOption[];
+    services: ServiceOption[];
+    clients: ClientOption[];
+
     appointments: Appointment[];
+
+    onCreate?: (dto: AppointmentCreate) => void; // ✅
 };
 
-export function SchedulePage({ masters, appointments }: Props) {
+export function SchedulePage({ masters, services, clients, appointments, onCreate }: Props) {
     const [selectedMasterId, setSelectedMasterId] = useState<number | "all">("all");
     const [weekStart, setWeekStart] = useState<Date>(getWeekStart(new Date()));
+    const [createOpen, setCreateOpen] = useState(false);
 
     const filtered = useMemo(() => {
         const ws = ymd(weekStart);
@@ -60,10 +73,26 @@ export function SchedulePage({ masters, appointments }: Props) {
                     onAppointmentClick={(a) => console.log("open appointment", a)}
                 />
             </div>
+
+            {/* ✅ FAB */}
+            <FloatingAddButton onClick={() => setCreateOpen(true)} ariaLabel="Создать запись" />
+
+            {/* ✅ Drawer create */}
+            <CreateAppointmentDrawer
+                open={createOpen}
+                onClose={() => setCreateOpen(false)}
+                masters={masters}
+                services={services}
+                clients={clients}
+                defaultMasterId={selectedMasterId === "all" ? undefined : selectedMasterId}
+                defaultDate={ymd(new Date())}
+                onCreate={(dto) => onCreate?.(dto)}
+            />
         </div>
     );
 }
 
+/* helpers */
 function getWeekStart(d: Date) {
     const x = new Date(d);
     const day = x.getDay();
@@ -72,14 +101,12 @@ function getWeekStart(d: Date) {
     x.setHours(0, 0, 0, 0);
     return x;
 }
-
 function addDays(d: Date, days: number) {
     const x = new Date(d);
     x.setDate(x.getDate() + days);
     x.setHours(0, 0, 0, 0);
     return x;
 }
-
 function ymd(d: Date) {
     const y = d.getFullYear();
     const m = String(d.getMonth() + 1).padStart(2, "0");
