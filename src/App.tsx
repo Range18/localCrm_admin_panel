@@ -22,7 +22,7 @@ export default function App() {
 
     return (
         <div className="app">
-            <AppShell orgName="Моя организация" activeKey={activeKey} onChange={setActiveKey}>
+            <AppShell orgName="Nelly Eva" activeKey={activeKey} onChange={setActiveKey}>
                 {activeKey === "schedule" ? (
                         <SchedulePage masters={mastersResponse.data.map(master => {
                             return {id: master.id, name: `${master.firstName} ${master.lastName}`}
