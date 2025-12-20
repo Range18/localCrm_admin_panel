@@ -18,7 +18,8 @@ import { SchedulePage } from "./pages/SchedulePage";
 // ✅ admin create api
 import {createAppointmentFromUi} from "./api/appointments/appointments";
 import {createMaster, createServiceFromUi} from "./api/masters/masters";
-import {createClient} from "./api/clients/clients"; // если у тебя тоже admin-роут — скажи, заменю
+import {createClient} from "./api/clients/clients";
+import {MasterOption} from "./components/schedule/types"; // если у тебя тоже admin-роут — скажи, заменю
 
 export default function App() {
     const [activeKey, setActiveKey] = useState<SidebarKey>("schedule");
@@ -36,7 +37,7 @@ export default function App() {
                         masters={mastersState.data.map((m) => ({
                             id: Number(m.id),
                             name: `${m.firstName} ${m.lastName}`,
-                        }))}
+                        })) as MasterOption[]}
                         services={servicesState.data.map((s) => ({
                             id: Number(s.id),
                             title: s.title,

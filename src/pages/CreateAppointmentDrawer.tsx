@@ -40,7 +40,7 @@ export function CreateAppointmentDrawer({
             master_id: mId,
             client_id: cId,
             service_id: sId,
-        };
+        } as AppointmentCreate;
     }, [defaultMasterId, defaultDate, masters, clients, services]);
 
     const [draft, setDraft] = useState<AppointmentCreate>(initial);
