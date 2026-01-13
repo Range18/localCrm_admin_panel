@@ -1,0 +1,125 @@
+/* контейнер */
+.loginWrap{
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+}
+
+.loginCard{
+    width: 100%;
+    max-width: 420px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.6);
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: var(--shadow-sm);
+    backdrop-filter: blur(10px);
+}
+
+.loginHeader{
+    margin-bottom: 14px;
+}
+
+.loginTitle{
+    margin: 0;
+    font-size: 22px;
+    font-weight: 900;
+}
+
+.loginSubtitle{
+    margin: 6px 0 0 0;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* ошибка */
+.loginError{
+    border: 1px solid rgba(244, 63, 94, 0.35);
+    background: var(--danger-weak);
+    color: var(--danger);
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-weight: 800;
+    font-size: 13px;
+}
+
+/* подсказка */
+.loginHint{
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+/* обертка для glow */
+.rdInputWrap{
+    border-radius: 14px;
+    padding: 2px;
+    transition: transform 160ms ease;
+}
+
+/* анимация фокуса (glow + легкий scale) */
+.rdInputAnim{
+    transition: box-shadow 180ms ease, transform 180ms ease, border-color 180ms ease;
+}
+
+.rdInputAnim:focus-visible{
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 6px rgba(0,0,0,0.08), var(--focus);
+}
+
+/* тёмная кнопка */
+.rdBtnDark{
+    border: 1px solid rgba(0,0,0,0.22);
+    background: rgba(12, 12, 16, 0.92);
+    color: rgba(255,255,255,0.92);
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+}
+
+.rdBtnDark:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+}
+
+.rdBtnDark:disabled{
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* чтобы внутри карточки был “воздух” от краёв */
+.loginCard{
+    padding: 22px; /* было меньше — увеличь */
+}
+
+/* форма и поля на всю ширину */
+.rdForm{
+    width: 100%;
+}
+
+.rdField{
+    width: 100%;
+}
+
+/* обёртка и сам инпут — на всю ширину */
+.rdInputWrap{
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.rdInput{
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* (по желанию) кнопка тоже на всю ширину */
+.rdBtnDark{
+    width: 100%;
+}
